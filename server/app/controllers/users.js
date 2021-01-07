@@ -22,7 +22,7 @@ module.exports = {
             if (error) {
                throw error;
             }
-            response.status(200).json(results.rows)
+            response.status(200).json(results.rows[0])
          }
       );
    },
@@ -58,7 +58,7 @@ module.exports = {
                throw error;
             }
             console.log(results)
-            response.status(201).json(results)
+            response.status(201).json(results.rows[0])
          }
       )
    }, 
@@ -73,7 +73,7 @@ module.exports = {
             if( error ) {
                throw error
             }
-            response.status(200).json(results.rows)
+            response.status(200).json(results.rows[0])
          }
       )
    },
@@ -87,7 +87,7 @@ module.exports = {
             if( error ) {
                throw error
             }
-            response.status(200).send(results.rows)
+            response.status(200).send(results.rows[0])
          }
       )
    }

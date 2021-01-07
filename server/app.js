@@ -2,7 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var Users = require('./app/controllers/users')
+const Users = require('./app/controllers/users');
+const Session = require('./app/controllers/session')
 var app = express();
 const port = 8080;
 app.use(logger('dev'));
@@ -20,6 +21,7 @@ app.get('/api/users/:id', Users.getUserById)
 app.patch('/api/users/:id', Users.updateUser)
 app.delete('/api/users/:id', Users.deleteUser)
 app.post('/api/users', Users.createUser)
+app.post('/api/login', Session.loginUser)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

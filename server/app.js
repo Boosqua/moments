@@ -34,7 +34,7 @@ app.get('/api/users/:id', Users.getUserById)
 app.patch('/api/users/:id', Users.updateUser)
 app.delete('/api/users/:id', Users.deleteUser)
 app.post('/api/users', Users.createUser)
-app.post('/api/login', Session.loginUser)
+app.post('/api/users/login', Session.loginUser)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

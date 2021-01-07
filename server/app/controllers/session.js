@@ -5,15 +5,11 @@ const keys = require("../../config/keys");
 
 const loginUser = (request, response) => {
    const { username, password } = request.body
-   console.log(username)
-   db.query( 
-      "SELECT * FROM users WHERE username = $1",
-      [username],
-      (error, results) => {
-         if (error) {
-            throw error
-         } else if ( results.rows.length === 0){
-            response.status(404).json({ username: 'username does not exist'})
+   db.query( "SELECT * FROM users WHERE username = $1", [username])
+      .then((results) => {
+         console.log(results)
+         if ( results.rows.length === 0){
+            return response.status(404).json({ username: 'username does not exist'})
          }
          const user = results.rows[0]
          bcrypt.compare( password, user.password )
@@ -38,7 +34,7 @@ const loginUser = (request, response) => {
             }
          )
       }
-   ) 
+   ).catch( error => { console.log( error )})
 }
 
 module.exports = {

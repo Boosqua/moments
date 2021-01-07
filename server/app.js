@@ -15,8 +15,11 @@ app.get('/api', (req, res) => {
   res.send(`${new Date()}`);
 });
 
-app.get('/api/users', Users.getUsers);
-
+app.get('/api/users', Users.index);
+app.get('/api/users/:id', Users.getUserById)
+app.patch('/api/users/:id', Users.updateUser)
+app.delete('/api/users/:id', Users.deleteUser)
+app.post('/api/users', Users.createUser)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

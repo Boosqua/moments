@@ -2,7 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var Users = require('./app/controllers/users')
 var app = express();
 const port = 8080;
 app.use(logger('dev'));
@@ -15,9 +15,7 @@ app.get('/api', (req, res) => {
   res.send(`${new Date()}`);
 });
 
-app.get('/api/users', (req, res) => {
-  res.send(['Aang', 'Katara', 'Momo', 'Sokka', 'Appa']);
-});
+app.get('/api/users', Users.getUsers);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

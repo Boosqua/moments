@@ -1,5 +1,7 @@
 const db = require("../../db");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const keys = require("../../config/keys");
 
 const loginUser = (request, response) => {
    const { username, password } = request.body
@@ -17,7 +19,19 @@ const loginUser = (request, response) => {
          bcrypt.compare( password, user.password )
             .then(isMatch => {
                if(isMatch) {
-                  response.json({msg: 'Success'})
+                  const payload = { id: user.id, username: user.username };
+
+                  jwt.sign(
+                     payload,
+                     keys.secretOrKey,
+                     {expiresIn: 3600},
+                     (error, token) => {
+                        response.json({
+                           success: true,
+                           token: 'Bearer '+ token
+                        })
+                     }
+                  )
                } else {
                   return response.status(400).json({ password: 'incorrect password'})
                }

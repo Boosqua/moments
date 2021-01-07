@@ -5,9 +5,6 @@ module.exports = {
       db.query(
          "SELECT id, username FROM users ORDER BY id ASC", 
          (error, results) => {
-            if (error) {
-               throw error;
-            }
             response.status(200).json(results.rows);
          }
       );
@@ -19,9 +16,6 @@ module.exports = {
          'SELECT id, username FROM users WHERE id = $1', 
          [id], 
          (error, results) => {
-            if (error) {
-               throw error;
-            }
             response.status(200).json(results.rows[0])
          }
       );
@@ -54,10 +48,6 @@ module.exports = {
          'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username',
          [username, hash],
          (error, results) => {
-            if( error ) {
-               throw error;
-            }
-            console.log(results)
             response.status(201).json(results.rows[0])
          }
       )
@@ -70,9 +60,6 @@ module.exports = {
          'UPDATE users SET username = $1, password = $2 WHERE id = $3 RETURNING id, username',
          [username, password, id],
          (error, results) => {
-            if( error ) {
-               throw error
-            }
             response.status(200).json(results.rows[0])
          }
       )
@@ -84,9 +71,6 @@ module.exports = {
          'DELETE FROM users WHERE id = $1 RETURNING id, username',
          [id],
          (error, results) => {
-            if( error ) {
-               throw error
-            }
             response.status(200).send(results.rows[0])
          }
       )

@@ -1,4 +1,4 @@
-import React, {useState }  from 'react';
+import React, {useState, useCallback}  from 'react';
 
 import { 
    Link,
@@ -34,14 +34,8 @@ function LoginForm(props){
          cb(e.currentTarget.value)
       }
    }
-   const submit = () => {
-      let user = {
-         username: username,
-         password: password
-      }
-      props.login(user)
-   }
-     // Render the session errors if there are any
+
+   // Render the session errors if there are any
    // const renderErrors = () => {
    //    return(
    //          <ul>
@@ -56,14 +50,22 @@ function LoginForm(props){
 
    return (
 
-      <Container maxWidth="sx" className={style.container} >
+      <Container className={style.container} >
       <Typography variant="h6" className={style.header}>
          {path === "/login" ? 
             "Welcome Back" : 
             "Register"
          }
       </Typography>
-      <form onSubmit={submit} style={{fontSize: "8px"}}>
+      <form onSubmit={() => {
+         let user = {
+            username: username,
+            password: password
+         }
+      
+         props.formType(user)
+         setPassword('')
+      }} style={{fontSize: "8px"}}>
             <input type="text"
                value={username}
                onChange={handleInput(setUsername)}
@@ -87,7 +89,7 @@ function LoginForm(props){
             "Need an account?" :
             "Already have an account?"}
          </Link>
-         <Button >submit</Button>
+         <Button type='submit'>submit</Button>
          {/* {renderErrors()} */}
       </form>
       </Container>

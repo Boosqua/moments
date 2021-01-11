@@ -43,23 +43,10 @@ function NavBar(props){
    const handleOnClick = useCallback(() => history.push('/'))
    let modal = path !== '/'
    let form;
-   if( path === '/login'){
-      form = <LoginForm />
-   } else {
-      form = <SignUpForm />
-   }
-   const [openModal,setModal] = useState(modal)
-   useEffect(() => {
-      setModal(path !== '/')
-   })
-   return (
-      <ThemeProvider theme={theme} key="">
-         <div className="nav-bar">
-         <Grid container direction='row' justify="space-between" alignContent="center" alignItems="center" space={3} className={style.grid}>
-            <Grid container item xs={2}  alignItems="center" justify="center">
-                  <p style={{fontFamily: "'Playfair Display', serif"}}>Photo Dojo</p>
-            </Grid>
-            <Grid container item xs={3} spacing={0} alignItems="center" justify="center">
+   function options () {
+      console.log(props)
+      return !props.loggedIn ? 
+       (<Grid container item xs={3} spacing={0} alignItems="center" justify="center">
                <ButtonGroup variant="contained" size="small" disableElevation >
                   <Link to={`/login`} style={{textDecoration: "none"}}>
                      <Button type="button" className={style.button}>
@@ -81,7 +68,47 @@ function NavBar(props){
                   >
                      {form}
                </Drawer>
+            </Grid>) : 
+            (
+               <Grid container item xs={5} spacing={1} alignItems="center" justify="center">
+                  <ButtonGroup variant="contained" size="small" disableElevation >
+                  <Link to={`/login`} style={{textDecoration: "none"}}>
+                     <Button type="button" className={style.button}>
+                        My Albums
+                     </Button>
+                  </Link>
+                  <Link to={`/signup`} style={{textDecoration: "none"}}>
+                     <Button type="button" className={style.button}>
+                        Saved
+                     </Button>
+                  </Link>
+                  <Link to={`/signup`} style={{textDecoration: "none"}}>
+                     <Button type="button" className={style.button}>
+                        profile
+                     </Button>
+                  </Link>
+               </ButtonGroup>
+               </Grid>
+            )
+   }
+      if( path === '/login'){
+         form = <LoginForm />
+      } else {
+      form = <SignUpForm />
+   }
+   const [openModal,setModal] = useState(modal)
+   useEffect(() => {
+      setModal(path !== '/')
+   })
+   return (
+      <ThemeProvider theme={theme} key="">
+         <div className="nav-bar">
+         <Grid container direction='row' justify="space-between" alignContent="center" alignItems="center" space={1} className={style.grid}>
+            <Grid container item xs={2}  alignItems="center" justify="center">
+                  <p style={{fontFamily: "'Playfair Display', serif"}}>Photo Dojo</p>
             </Grid>
+            
+         {options()}
          </Grid>
          </div>
       </ThemeProvider>

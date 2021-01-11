@@ -64,11 +64,15 @@ module.exports = {
       if( validated ){
          //encrypt password before insertion into db
          const hash = encryptPassword(password)
-         return db.query(
-            "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username",
-            [username, hash]).then( results => {
-               return results.rows[0]
-            })
+         const date = new Date()
+         return db
+           .query(
+             "INSERT INTO users (username, password, created_date) VALUES ($1, $2, $3) RETURNING id, username",
+             [username, hash, date]
+           )
+           .then((results) => {
+             return results.rows[0];
+           });
       } else {
          return null
       }

@@ -7,10 +7,10 @@ const loginUser = (request, response) => {
    const { username, password } = request.body
    User.findByUsername(username) //grab user info
       .then((results) => {
-         if ( results.rows.length === 0){
+         if ( !results ){
             return response.status(404).json({ username: 'username does not exist'})
          }
-         const user = results.rows[0]
+         const user = results
          bcrypt.compare( password, user.password ) //check password against encrypted
             .then(isMatch => {
                if(isMatch) {

@@ -36,7 +36,6 @@ module.exports = {
    updateUser: (request, response) => { //to be replaced
       const id = parseInt(request.params.id);
       const { username, password } = request.body;
-
       db.query(
          'UPDATE users SET username = $1, password = $2 WHERE id = $3 RETURNING id, username',
          [username, password, id],

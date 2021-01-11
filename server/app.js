@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const Users = require('./app/controllers/users');
 const Session = require('./app/controllers/session')
+const Albums = require('./app/controllers/albums')
 var app = express();
 const passport = require("passport");
 const port = 8080;
@@ -30,10 +31,13 @@ app.get(
 );
 
 app.get('/api/users', Users.index);
+app.get('/api/albums', Albums.index);
 app.get('/api/users/:id', Users.getUserById)
 app.patch('/api/users/:id', Users.updateUser)
 app.delete('/api/users/:id', Users.deleteUser)
+app.delete('/api/albums/:id', Albums.delete)
 app.post('/api/users', Users.createUser)
+app.post('/api/albums', Albums.createAlbum)
 app.post('/api/users/login', Session.loginUser)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

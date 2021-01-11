@@ -1,7 +1,13 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, {useState, useEffect, useCallback}  from 'react';
+import { 
+   withRouter,
+   Link,
+   useRouteMatch,
+   useHistory
+} from "react-router-dom";
 
-class LoginForm extends React.Component {
+
+class LOL extends React.Component {
   constructor(props) {
     super(props);
 
@@ -82,5 +88,64 @@ class LoginForm extends React.Component {
     );
   }
 }
+function LoginForm(props){
+   let { path, url }  = useRouteMatch()
+   const history = useHistory();
+   const [username, setUsername] = useState('');
+   const [password, setPassword] = useState('');
+   const handleInput = (cb) => {
+      return (e) => {
+         cb(e.currentTarget.value)
+      }
+   }
+   const submit = () => {
+      let user = {
+         username: username,
+         password: password
+      }
+      props.login(user)
+   }
+     // Render the session errors if there are any
+   // const renderErrors = () => {
+   //    return(
+   //          <ul>
+   //          {Object.keys(this.state.errors).map((error, i) => (
+   //             <li key={`error-${i}`}>
+   //                {this.state.errors[error]}
+   //             </li>
+   //          ))}
+   //          </ul>
+   //       );
+   // }
 
-export default withRouter(LoginForm);
+   return (
+   <div>
+      <p>
+         {path === "/login" ? 
+            "Welcome Back" : 
+            "Register"
+         }
+      </p>
+      <form onSubmit={submit}>
+         <div>
+            <input type="text"
+               value={username}
+               onChange={handleInput(setUsername)}
+               placeholder="Username"
+            />
+         <br/>
+            <input type="password"
+               value={password}
+               onChange={handleInput(setPassword)}
+               placeholder="Password"
+            />
+         <br/>
+         <input type="submit" value="Submit" />
+         {/* {renderErrors()} */}
+         </div>
+      </form>
+   </div>
+   );
+  
+}
+export const SessionForm = withRouter(LoginForm)

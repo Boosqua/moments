@@ -1,6 +1,6 @@
 import axios from "axios";
-
-export const setAuthToken = (token) => {
+interface user{username:string, password:string}
+export const setAuthToken = (token:boolean) => {
   if (token) {
     axios.defaults.headers.common["Authorization"] = token;
   } else {
@@ -8,11 +8,11 @@ export const setAuthToken = (token) => {
   }
 };
 
-export const signup = (userData) => {
-  return axios.post("/api/users/register", userData);
+export const signup = (userData:user) => {
+  return axios.post("/api/users", userData);
 };
 
-export const login = (userData) => {
+export const login = (userData:user) => {
   return axios.post("/api/users/login", userData);
 };
 

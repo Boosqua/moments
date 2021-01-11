@@ -6,6 +6,10 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.20",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "axios": "^0.21.1",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.1",
@@ -42,5 +46,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8080",
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
 }

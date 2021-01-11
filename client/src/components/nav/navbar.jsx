@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import { Transition } from "react-transition-group"
 import navStyle from "./nav.css"
-import { Modal, Grid, ButtonGroup, Button, createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core';
+import {  Grid, ButtonGroup, Button, createMuiTheme, ThemeProvider, makeStyles, Drawer} from '@material-ui/core';
 import LoginForm from '../session/login_form_container'
 import SignUpForm from '../session/signup_form_container'
 import {
@@ -13,6 +14,7 @@ const theme = createMuiTheme({
       fontFamily: "'Playfair Display', serif",
       button: {
          fontSize: '8px',
+         height: "14px",
          padding: "0px",
          margin: "0px",
       }
@@ -27,6 +29,11 @@ const useStyles = makeStyles((theme)=>({
    },
    grid: {
       height: 30
+   },
+   modal: {
+      display: "flex",
+      flexDirection: "row-reverse",
+
    }
 }))
 function NavBar(props){
@@ -46,7 +53,7 @@ function NavBar(props){
       setModal(path !== '/')
    })
    return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme} key="">
          <div className="nav-bar">
          <Grid container direction='row' justify="space-between" alignContent="center" alignItems="center" space={3} className={style.grid}>
             <Grid container item xs={2}  alignItems="center" justify="center">
@@ -65,14 +72,15 @@ function NavBar(props){
                      </Button>
                   </Link>
                </ButtonGroup>
-               <Modal
+               <Drawer
+                  anchor="right"
                   open={openModal}
+                  SlideProps={ {in: openModal, direction: "right"} }
                   onClose={handleOnClick}
-                  aria-labelledby="modal-title"
-                  aria-describedby="modal-description"
+                  className={style.modal}
                   >
                      {form}
-               </Modal>
+               </Drawer>
             </Grid>
          </Grid>
          </div>

@@ -1,94 +1,30 @@
-import React, {useState, useEffect, useCallback}  from 'react';
+import React, {useState }  from 'react';
+
 import { 
-   withRouter,
    Link,
+   withRouter,
    useRouteMatch,
    useHistory
 } from "react-router-dom";
-
-
-class LOL extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      username: '',
-      password: '',
-      errors: {}
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.renderErrors = this.renderErrors.bind(this);
-  }
-
-  // Once the user has been authenticated, redirect to the Tweets page
-//   componentWillReceiveProps(nextProps) {
-//     if (nextProps.currentUser === true) {
-//       this.props.history.push('/tweets');
-//     }
-
-//     // Set or clear errors
-//     this.setState({errors: nextProps.errors})
-//   }
-
-  // Handle field updates (called in the render method)
-  update(field) {
-    return e => this.setState({
-      [field]: e.currentTarget.value
-    });
-  }
-
-  // Handle form submission
-  handleSubmit(e) {
-    e.preventDefault();
-
-    let user = {
-      username: this.state.username,
-      password: this.state.password
-    };
-
-    this.props.login(user); 
-  }
-
-  // Render the session errors if there are any
-  renderErrors() {
-    return(
-      <ul>
-        {Object.keys(this.state.errors).map((error, i) => (
-          <li key={`error-${i}`}>
-            {this.state.errors[error]}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-              <input type="text"
-                value={this.state.username}
-                onChange={this.update('username')}
-                placeholder="Username"
-              />
-            <br/>
-              <input type="password"
-                value={this.state.password}
-                onChange={this.update('password')}
-                placeholder="Password"
-              />
-            <br/>
-            <input type="submit" value="Submit" />
-            {this.renderErrors()}
-          </div>
-        </form>
-      </div>
-    );
-  }
-}
+import {Container, makeStyles, Typography, Button, TextField} from '@material-ui/core'
+import styleSheet from './session.css'
+const useStyles = makeStyles((theme) => ({
+   container: {
+      background: '#0077b6',
+      maxWidth: '120px',
+      height: "inherit"
+   },
+   header: {
+      fontSize: "10px",
+      marginTop: "10px",
+      marginBottom: "10px",
+   },
+   button: {
+      width: "20px"
+   }
+}))
 function LoginForm(props){
+   let style = useStyles()
    let { path, url }  = useRouteMatch()
    const history = useHistory();
    const [username, setUsername] = useState('');
@@ -119,32 +55,42 @@ function LoginForm(props){
    // }
 
    return (
-   <div>
-      <p>
+
+      <Container maxWidth="sx" className={style.container} >
+      <Typography variant="h6" className={style.header}>
          {path === "/login" ? 
             "Welcome Back" : 
             "Register"
          }
-      </p>
-      <form onSubmit={submit}>
-         <div>
+      </Typography>
+      <form onSubmit={submit} style={{fontSize: "8px"}}>
             <input type="text"
                value={username}
                onChange={handleInput(setUsername)}
                placeholder="Username"
+               className="sessionInput"
             />
          <br/>
             <input type="password"
+               className="sessionInput"
                value={password}
                onChange={handleInput(setPassword)}
                placeholder="Password"
             />
          <br/>
-         <input type="submit" value="Submit" />
+         <Link
+         className="session-links"
+         to={path === "/login" ?
+         "/signup" : 
+         "/login"}>
+            {path=== "/login" ? 
+            "Need an account?" :
+            "Already have an account?"}
+         </Link>
+         <Button >submit</Button>
          {/* {renderErrors()} */}
-         </div>
       </form>
-   </div>
+      </Container>
    );
   
 }

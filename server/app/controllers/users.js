@@ -1,8 +1,8 @@
 const db = require("../../db");
-
+const Errors = require("../models/Errors")
 const User = require("../models/User");
 module.exports = { 
-   index: (request, response) => {
+   index: (request, response) => { // to be replaced
       db.query(
          "SELECT id, username FROM users ORDER BY id ASC", 
          (error, results) => {
@@ -16,7 +16,7 @@ module.exports = {
          if( user ) {
             return response.status(200).json(user);
          } else {
-            return response.status(404).json(User.errors.fullErrorMessages)
+            return response.status(404).json(Errors.messages)
          }
       })
    },
@@ -29,11 +29,11 @@ module.exports = {
          if( user ){
             return response.status(201).json(user)
          } else {
-            return response.status(404).json(User.errors.fullErrorMessages)
+            return response.status(404).json(Errors.messages)
          }
       })
    }, 
-   updateUser: (request, response) => {
+   updateUser: (request, response) => { //to be replaced
       const id = parseInt(request.params.id);
       const { username, password } = request.body;
 
@@ -45,15 +45,10 @@ module.exports = {
          }
       )
    },
-   deleteUser: (request, response) => {
+   deleteUser: (request, response) => { 
       const id = parseInt(request.params.id);
-      
-      db.query(
-         'DELETE FROM users WHERE id = $1 RETURNING id, username',
-         [id],
-         (error, results) => {
-            response.status(200).json(results.rows[0])
-         }
-      )
+      User.delete(id).then( user => {
+         response.status(200).json(user) //return user object to confirm deletion 
+      })
    }
 }

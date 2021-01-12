@@ -1,8 +1,8 @@
 import * as APIUtil from "../util/image_util";
-export const RECEIVE_IMAGES = "RECEIVE_IMAGES";
 import { Middleware, Action } from "redux";
 import {ThunkAction} from 'redux-thunk'
 import {RootState} from '../reducers/root_reducer'
+export const RECEIVE_IMAGES = "RECEIVE_IMAGES";
 
 export interface images {
    [id: number]: string
@@ -21,5 +21,5 @@ export const uploadImages = (images: FormData)
    :ThunkAction<void, RootState, unknown, Action<string>>  => (dispatch
       : Middleware | any ) =>
       APIUtil.uploadImages(images).then(
-         (result: images) => dispatch(receiveImages(result))
+         (result: {data: images}) => dispatch(receiveImages(result.data))
   );

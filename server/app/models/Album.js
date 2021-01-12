@@ -2,8 +2,9 @@ const db = require("../../db");
 const Errors = require("./Errors");
 
 module.exports = {
-   create: ( album, ownerId ) => {
-      const { title, public } = album;
+   create: ( album ) => {
+      const { title, public, ownerId } = album;
+      console.log(title)
       return db.query(
         "INSERT INTO albums (title, ownerId, public, created_date) VALUES ($1, $2, $3, $4) RETURNING *",
         [title, ownerId, public, new Date()]

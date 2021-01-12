@@ -1,20 +1,28 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import { Transition } from "react-transition-group"
 import navStyle from "./nav.css"
-import {  Grid, ButtonGroup, Button, createMuiTheme, ThemeProvider, makeStyles, Drawer} from '@material-ui/core';
+import {  
+   Grid, 
+   ButtonGroup, 
+   Button, 
+   createMuiTheme, 
+   ThemeProvider, 
+   makeStyles, 
+   Drawer
+} from '@material-ui/core';
 import LoginForm from '../session/login_form_container'
 import SignUpForm from '../session/signup_form_container'
+import Profile from '../profile/profile_container'
 import {
   Link,
   useRouteMatch,
-  useHistory
+  useHistory,
 } from "react-router-dom";
 const theme = createMuiTheme({
    typography: {
       fontFamily: "'Playfair Display', serif",
       button: {
          fontSize: '25px',
-         height: "14px",
+         height: "30px",
          padding: "10px",
          margin: "0px",
       }
@@ -41,10 +49,11 @@ function NavBar(props){
    let { path, url }  = useRouteMatch()
    const history = useHistory();
    const handleOnClick = useCallback(() => history.push('/'))
-   let modal = path !== '/'
-   let form;
+   let sessionModal = (path === '/login' || path === "/signup")
+   let profileModale = (path === '/@me')
+   console.log(path)
+   let form
    function options () {
-      console.log(props)
       return !props.loggedIn ? 
        (<Grid container item xs={3} spacing={0} alignItems="center" justify="center">
                <ButtonGroup variant="contained" size="medium" disableElevation >
@@ -72,7 +81,7 @@ function NavBar(props){
             (
                <Grid container item xs={4} spacing={1} alignItems="center" justify="center">
                   <ButtonGroup variant="contained" size="medium" disableElevation >
-                  <Link to={`/login`} style={{textDecoration: "none"}}>
+                  <Link to={`/@me/albums`} style={{textDecoration: "none"}}>
                      <Button type="button" className={style.button}>
                         My Albums
                      </Button>
@@ -82,23 +91,34 @@ function NavBar(props){
                         Saved
                      </Button>
                   </Link>
-                  <Link to={`/signup`} style={{textDecoration: "none"}}>
+                  <Link to={`/@me`} style={{textDecoration: "none"}}>
                      <Button type="button" className={style.button}>
                         profile
                      </Button>
                   </Link>
                </ButtonGroup>
+               <Drawer
+                  anchor="right"
+                  open={openProfile}
+                  SlideProps={ {in: openProfile, direction: "right"} }
+                  onClose={handleOnClick}
+                  className={style.modal}
+                  >
+                     <Profile />
+               </Drawer>
                </Grid>
             )
    }
-      if( path === '/login'){
-         form = <LoginForm />
-      } else {
-      form = <SignUpForm />
+   if( path === '/login'){
+      form = <LoginForm />
+   } else {
+   form = <SignUpForm />
    }
-   const [openModal,setModal] = useState(modal)
+   const [openModal,setModal] = useState(sessionModal)
+   const [openProfile, setProfile] = useState(profileModale)
    useEffect(() => {
-      setModal(path !== '/')
+      setModal(path === '/login' || path === "/signup")
+      setProfile(path === '/@me')
    })
    return (
       <ThemeProvider theme={theme} key="">
@@ -115,6 +135,7 @@ function NavBar(props){
 
    );
 }
+
 
 export default NavBar;
 

@@ -2,9 +2,10 @@ const Album = require( "../models/Album")
 
 module.exports = {
    createAlbum: (request, response) => {
-      const { title, userId, public } = request.body;
-      return Album.create( {title, public }, userId).then( album => {
-         return response.status(201).json(album)
+      const { title, ownerId, public } = request.body;
+      console.log(request.body)
+      return Album.create( {title, public, ownerId }).then( album => {
+         response.status(201).json(album)
       })
    },
    index: (request, response) => {

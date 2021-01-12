@@ -1,7 +1,7 @@
 import {RECEIVE_ALBUM, action} from "../actions/album_actions";
 import { album } from "../util/album_util";
 export default function (
-   state: {} | {[id: number]: album}, 
+   state: {} | {[id: number]: album} = {}, 
    action: action
    ){
       switch (action.type) {

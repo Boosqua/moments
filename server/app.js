@@ -5,6 +5,11 @@ var logger = require('morgan');
 const Users = require('./app/controllers/users');
 const Session = require('./app/controllers/session')
 const Albums = require('./app/controllers/albums')
+const Images = require('./app/controllers/images')
+const upload = require("./app/controllers/image_upload_aws")
+const AWS = require("aws-sdk");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
 var app = express();
 const passport = require("passport");
 const port = 8080;
@@ -35,6 +40,7 @@ app.get('/api/albums', Albums.index);
 app.get('/api/users/:id', Users.getUserById)
 app.patch('/api/users/:id', Users.updateUser)
 app.delete('/api/users/:id', Users.deleteUser)
+app.post('/api/images',upload.array("albums[photos][]", 200), Images.upload)
 app.delete('/api/albums/:id', Albums.delete)
 app.post('/api/users', Users.createUser)
 app.post('/api/albums', Albums.createAlbum)

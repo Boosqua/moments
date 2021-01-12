@@ -11,16 +11,18 @@ import styleSheet from './session.css'
 const useStyles = makeStyles((theme) => ({
    container: {
       background: '#0077b6',
-      maxWidth: '120px',
+      maxWidth: '500px',
       height: "inherit"
    },
    header: {
-      fontSize: "10px",
+      fontSize: "50px",
       marginTop: "10px",
       marginBottom: "10px",
    },
    button: {
-      width: "20px"
+      width: "450px",
+      height: "50px",
+      marginTop:"20px"
    }
 }))
 function LoginForm(props){
@@ -89,7 +91,7 @@ function LoginForm(props){
             "Need an account?" :
             "Already have an account?"}
          </Link>
-         <Button type='submit'>submit</Button>
+         <Button type='submit' className={style.button}>submit</Button>
          {/* {renderErrors()} */}
       </form>
       </Container>

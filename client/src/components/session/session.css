@@ -1,15 +1,18 @@
 .session-links{ 
    text-decoration: none;
-   font-size: 5px;
-   margin: 0;
+   font-size: 20px;
+   margin: 10px;
+   width: inherit;
+   clear: right;
+   font-style: italic;
 }
 .sessionInput{
    background: #CAF0F8;
    font-family: "'Playfair Display', serif";
    border: none;
-   margin-bottom: 2px;
+   margin-bottom: 10px;
    width: 100%;
-   font-size: 10px;
+   font-size: 30px;
    border-radius: 2px;;
 }
 .sessionInput:focus{

@@ -15,3 +15,4 @@ db.query("TRUNCATE TABLE users");
 
    UserModel.newUser({ username: "BooSqua", password: "password" });
 // db.query( createTestTable )
+//  CREATE TABLE images (                                                 ID SERIAL PRIMARY KEY,                                                          albumId INTEGER,                                                                path VARCHAR);

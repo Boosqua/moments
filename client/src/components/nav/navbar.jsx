@@ -13,22 +13,22 @@ const theme = createMuiTheme({
    typography: {
       fontFamily: "'Playfair Display', serif",
       button: {
-         fontSize: '8px',
+         fontSize: '25px',
          height: "14px",
-         padding: "0px",
+         padding: "10px",
          margin: "0px",
       }
    }
 })
 const useStyles = makeStyles((theme)=>({
    button: {
-      padding: 0,
+      padding: 10,
       margin: 0,
       display:'flex',
       
    },
    grid: {
-      height: 30
+      height: 50
    },
    modal: {
       display: "flex",
@@ -47,7 +47,7 @@ function NavBar(props){
       console.log(props)
       return !props.loggedIn ? 
        (<Grid container item xs={3} spacing={0} alignItems="center" justify="center">
-               <ButtonGroup variant="contained" size="small" disableElevation >
+               <ButtonGroup variant="contained" size="medium" disableElevation >
                   <Link to={`/login`} style={{textDecoration: "none"}}>
                      <Button type="button" className={style.button}>
                         Log In
@@ -70,8 +70,8 @@ function NavBar(props){
                </Drawer>
             </Grid>) : 
             (
-               <Grid container item xs={5} spacing={1} alignItems="center" justify="center">
-                  <ButtonGroup variant="contained" size="small" disableElevation >
+               <Grid container item xs={4} spacing={1} alignItems="center" justify="center">
+                  <ButtonGroup variant="contained" size="medium" disableElevation >
                   <Link to={`/login`} style={{textDecoration: "none"}}>
                      <Button type="button" className={style.button}>
                         My Albums
@@ -104,8 +104,8 @@ function NavBar(props){
       <ThemeProvider theme={theme} key="">
          <div className="nav-bar">
          <Grid container direction='row' justify="space-between" alignContent="center" alignItems="center" space={1} className={style.grid}>
-            <Grid container item xs={2}  alignItems="center" justify="center">
-                  <p style={{fontFamily: "'Playfair Display', serif"}}>Photo Dojo</p>
+            <Grid container item sm={3}  alignItems="center" justify="center">
+                  <p style={{fontFamily: "'Playfair Display', serif", fontSize: "30px"}}>Photo Dojo</p>
             </Grid>
             
          {options()}

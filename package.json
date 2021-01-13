@@ -12,5 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/Boosqua/moments.git"
   },
-  "dependencies": {}
+  "dependencies": {
+      "typescript": "^4.1.3"
+  }
 }

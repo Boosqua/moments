@@ -1,11 +1,9 @@
 const { Pool, Client } = require("pg");
 const { pgPool } = require("../config/keys")
 
-const pool = new Client({
+const pool = new Pool({
   connectionString: pgPool,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: true
 });
 pool.query( "INSERT INTO users (username, password) VALUES (WORKING, MAYBE)" )
 module.exports = {

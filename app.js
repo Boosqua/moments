@@ -10,7 +10,7 @@ const upload = require("./app/controllers/image_upload_aws")
 const path = require("path");
 var app = express();
 const passport = require("passport");
-const port = 8080;
+const port = process.env.PORT || 8080;
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -18,11 +18,12 @@ app.use(cookieParser());
 app.set('view engine', 'html');
 app.use(passport.initialize());
 require("./config/passport")(passport);
-app.listen(process.env.PORT || 8080);
+// app.listen(process.env.PORT || 8080);
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join('app', 'client', "build")));
+  app.use(express.static("client/build"));
    app.get("/", function (req, res) {
-   res.sendFile(path.resolve('app', 'client', "build", "index.html"));
+      console.log(path.resolve(__dirname, "client", "build"))
+      res.sendFile(path.resolve(__dirname, "client", "build"));
    });
 }
 app.get('/', (req, res) => {

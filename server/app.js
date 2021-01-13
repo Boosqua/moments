@@ -20,9 +20,9 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 app.listen(process.env.PORT || 8080);
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "build")));
+  app.use(express.static(path.join('app', 'client', "build")));
    app.get("/", function (req, res) {
-   res.sendFile(path.join(__dirname, "build", "index.html"));
+   res.sendFile(path.join('app', 'client', "build", "index.html"));
    });
 }
 app.get('/', (req, res) => {

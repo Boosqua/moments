@@ -1,7 +1,7 @@
 # Submission Requirements
 ## Project Description
-
 ## DESCRIPTION:
+https://photodojo.herokuapp.com/#/
 
 Photo Dojo is online photo portfolio where anyone can create photo albums to share privately or with the community. Photo Dojo is currently divided into different sections, the landing page and the users album collection. 
 
@@ -10,7 +10,7 @@ The landing page is home to a carousel of "Trending Albums" and gallery of recen
 If the User is logged in they have access to the "My Albums" page where they can view a gallery of their albums or create new albums. in the future, the gallery will allow users to share private albums, delete albums, upload additional images, change cover photos, and much more. 
 
 ## DEVELOPMENT:
-Photo was designed using and MVC framework similar to Ruby on Rails, and adopting some Rails naming conventions. Much like the way Rails Model class handles db queries and associations, the User, Album, and Image classes handle all the postgresql queries and return the appropriate data objects. The controller classes are where HTTP request are received by different methods via routes( which currently live in app.js but should be moved to config). Once a request is received, it is sent to the appropriate User method, and once a data object is returned to the controller, the controller send the result back with an appropriate status code. 
+Photo was designed using and MVC framework similar to Ruby on Rails, and adopting some Rails naming conventions. Much like the way Rails Model class handles db queries and associations, the User, Album, and Image classes handle all the sql queries and return the appropriate data objects. The controller classes are where HTTP request are received by different methods via routes( which currently live in app.js but should be moved to config). Once a request is received, it is sent to the appropriate User method, and once a data object is returned to the controller, the controller send the result back with an appropriate status code. 
 
 ## VIEWS USER FLOW
 

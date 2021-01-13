@@ -1,24 +1,18 @@
 import * as APIUtil from "../util/album_util";
-export var RECEIVE_ALBUM = "RECEIVE_ALBUM";
-export var RECEIVE_ALL_ALBUMS = "RECEIVE_ALL_ALBUMS";
-export var REMOVE_ALBUM = "REMOVE_ALBUM";
-export var receiveAlbum = function (album) { return ({
+export const RECEIVE_ALBUM = "RECEIVE_ALBUM";
+export const RECEIVE_ALL_ALBUMS = "RECEIVE_ALL_ALBUMS";
+export const REMOVE_ALBUM = "REMOVE_ALBUM";
+export const receiveAlbum = (album) => ({
     type: RECEIVE_ALBUM,
     album: album
-}); };
-export var receiveAllAlbums = function (albums) { return ({
+});
+export const receiveAllAlbums = (albums) => ({
     type: RECEIVE_ALL_ALBUMS,
     albums: albums
-}); };
-export var removeUtilAlbum = function () { return ({
+});
+export const removeUtilAlbum = () => ({
     type: REMOVE_ALBUM
-}); };
-export var createAlbum = function (album) { return function (dispatch) {
-    return APIUtil.createAlbum(album).then(function (result) { return dispatch(receiveAlbum(result.data)); });
-}; };
-export var fetchAllAlbums = function (userId) { return function (dispatch) {
-    return APIUtil.fetchAllAlbums(userId).then(function (result) { return dispatch(receiveAllAlbums(result.data)); });
-}; };
-export var uploadCover = function (image) { return function (dispatch) {
-    return APIUtil.uploadCover(image).then(function (results) { return dispatch(receiveAlbum(results.data)); });
-}; };
+});
+export const createAlbum = (album) => (dispatch) => APIUtil.createAlbum(album).then((result) => dispatch(receiveAlbum(result.data)));
+export const fetchAllAlbums = (userId) => (dispatch) => APIUtil.fetchAllAlbums(userId).then((result) => dispatch(receiveAllAlbums(result.data)));
+export const uploadCover = (image) => (dispatch) => APIUtil.uploadCover(image).then((results) => dispatch(receiveAlbum(results.data)));

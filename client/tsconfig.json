@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "esnext",
     "allowJs": true,
     "outDir": "build",
@@ -23,6 +23,6 @@
 
   },
   "include": [
-    "src"
+    "src/**/*"
   ]
 }

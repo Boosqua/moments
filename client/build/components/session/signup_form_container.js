@@ -1,17 +1,17 @@
 import { connect } from "react-redux";
 import { login, signup } from "../../actions/session_actions";
 import { SessionForm } from "./session_form";
-var mapStateToProps = function (state) {
+const mapStateToProps = (state) => {
     return {
         signedIn: state.session.isSignedIn,
         errors: state.errors.session,
         type: "signup"
     };
 };
-var mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = (dispatch) => {
     return {
-        formType: function (user) { return dispatch(signup(user)); },
-        login: function (user) { return dispatch(login(user)); }
+        formType: (user) => dispatch(signup(user)),
+        login: (user) => dispatch(login(user))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SessionForm);

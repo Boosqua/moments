@@ -1,5 +1,5 @@
 import axios from "axios";
-export var setAuthToken = function (token) {
+export const setAuthToken = (token) => {
     if (token) {
         axios.defaults.headers.common["Authorization"] = token;
     }
@@ -7,9 +7,9 @@ export var setAuthToken = function (token) {
         delete axios.defaults.headers.common["Authorization"];
     }
 };
-export var signup = function (userData) {
+export const signup = (userData) => {
     return axios.post("/api/users", userData);
 };
-export var login = function (userData) {
+export const login = (userData) => {
     return axios.post("/api/users/login", userData);
 };

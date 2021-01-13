@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.set('view engine', 'html');
 app.use(passport.initialize());
 require("./config/passport")(passport);
-
+app.listen(process.env.PORT || 3000);
 app.get('/api', (req, res) => {
   res.send(`${new Date()}`);
 });

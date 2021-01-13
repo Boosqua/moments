@@ -1,13 +1,16 @@
 {
-  "name": "Photo Dojo",
+  "name": "PhotoDojo",
   "version": "1.0.0",
   "engines": {
     "node": "10.13.0"
   },
   "scripts": {
     "start": "nodemon ./app.js --prefix server",
-   "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
-  "dependencies": {
-  }
+    "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boosqua/moments.git"
+  },
+  "dependencies": {}
 }

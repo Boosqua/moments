@@ -27,7 +27,7 @@ function LandingPage(props) {
       }
    })
    if( items.length === 0 && props.albums.length > 0 ) { //onetime grab of newly created albums for "trending carousel"
-      for( let i = props.albums.length - 1; i >= props.albums.length - 10; i-- ){
+      for( let i = props.albums.length - 1; i >= props.albums.length - 10 && i >= 0; i-- ){
          let album = { title: props.albums[i].title, imagePath: props.albums[i].cover_path }
          items.push(album)
       }

@@ -72,6 +72,8 @@ module.exports = {
            )
            .then((results) => {
              return results.rows[0];
+           }).catch((e) => {
+               console.log(e)
            });
       } else {
          return null

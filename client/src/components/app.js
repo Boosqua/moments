@@ -18,11 +18,12 @@ const theme = createMuiTheme({
     },
   },
 });
+// need to rework routes
 const App = () => (
   <div>
     <CssBaseline>
       <ThemeProvider theme={theme}>
-         <Switch>
+         <Switch> 
             <Route exact path="/" component={MainPage} />
             <AuthRoute exact path="/login" component={MainPage} />
             <AuthRoute exact path="/signup" component={MainPage} />

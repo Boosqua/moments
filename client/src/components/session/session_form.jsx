@@ -1,12 +1,10 @@
 import React, {useState}  from 'react';
-
 import { 
    Link,
    withRouter,
-   useRouteMatch,
-   useHistory
+   useRouteMatch
 } from "react-router-dom";
-import {Container, makeStyles, Typography, Button, TextField} from '@material-ui/core'
+import {Container, makeStyles, Typography, Button} from '@material-ui/core'
 import styleSheet from './session.css'
 export const useStyles = makeStyles((theme) => ({
    container: {
@@ -27,8 +25,7 @@ export const useStyles = makeStyles((theme) => ({
 }))
 function LoginForm(props){
    let style = useStyles()
-   let { path, url }  = useRouteMatch()
-   const history = useHistory();
+   let { path }  = useRouteMatch()
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const handleInput = (cb) => {
@@ -36,8 +33,10 @@ function LoginForm(props){
          cb(e.currentTarget.value)
       }
    }
+   //errors code will be usable one day :D
 
-   // Render the session errors if there are any
+
+   // Render the session errors if there are any 
    // const renderErrors = () => {
    //    return(
    //          <ul>
@@ -64,8 +63,12 @@ function LoginForm(props){
             username: username,
             password: password
          }
-      
-         props.formType(user)
+         
+         props.formType(user).then(() => {
+            if( props.type === 'signup') { // spaghetti code since I forgot to get jwt passport to work on backend signup
+               props.login(user)
+            }
+         })
          setPassword('')
       }} style={{fontSize: "8px"}}>
             <input type="text"

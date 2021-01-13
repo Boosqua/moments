@@ -1,7 +1,7 @@
 import {REMOVE_ALBUM, RECEIVE_ALBUM, action} from '../actions/album_actions'
 import { album } from '../util/album_util'
 
-export default function (
+export default function reducer(
    state: {} | album = {}, 
    action: {type: "REMOVE_ALBUM"} | action
    ){

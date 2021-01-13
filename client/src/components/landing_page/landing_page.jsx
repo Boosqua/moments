@@ -1,63 +1,77 @@
-import React, {useState}  from "react"
+import React, {useState, useEffect}  from "react"
 import {Typography, Paper, Button} from "@material-ui/core"
+import {AlbumDisplay} from "../album_crud/album"
 import Carousel from 'react-material-ui-carousel'
-import axios from 'axios'
+import GridListContainer from "../grid_list"
 function Item(props)
 {
     return (
-        <Paper>
-            <h2>{props.item.name}</h2>
-            <p>{props.item.description}</p>
-
+        <Paper height="400">
+           <br />
+           <div style={{height: "450px"}} > 
+            {AlbumDisplay(props)}
+           </div>
             <Button className="CheckButton">
                 Check it out!
             </Button>
         </Paper>
     )
 }
-function LandingPage() {
-   var items = [
-      {
-         name: "Random Name #1",
-         description: "Probably the most random thing you have ever seen!"
-      },
-      {
-         name: "Random Name #2",
-         description: "Hello World!"
+function LandingPage(props) {
+   let items = [];
+   const [loaded, setLoaded] = useState(false)
+   useEffect( () => {
+      if(!loaded){
+         props.fetchUtilImages() //grab last 50 uploaded images for image gallery 
+         setLoaded(true)
       }
-   ]
-
+   })
+   if( items.length === 0 && props.albums.length > 0 ) { //onetime grab of newly created albums for "trending carousel"
+      for( let i = props.albums.length - 1; i >= props.albums.length - 10; i-- ){
+         let album = { title: props.albums[i].title, imagePath: props.albums[i].cover_path }
+         items.push(album)
+      }
+   }
+   function createImagePreview(images){ //stole function from album crud --> this should be stored on GridListContainer at some point, no time atm
+      let gridReady = images.map( (imagePath, index) => {
+         let img = new Image();
+         img.src = imagePath
+         return { img: img, title: index, author: props.user.username }
+      })
+      return (
+         <div style={{display: "flex", justifyContent: "center", flexDirection: "column"}}> 
+            <br/>
+            <GridListContainer tileData={gridReady}/>
+         </div>
+      )
+   }
    return (
       <div style={{ textAlign: "center", marginTop: "10px"}}>
          <Typography variant="h3">
             Trending Albums
          </Typography>
+         <br/>
          <Carousel>
                {
-                  items.map( (item, i) => <Item key={i} item={item} /> )
+                  items.map( (item, i) => (
+                     
+                        <Item key={i} {...item  } size="400" /> 
+
+                  ))
                }
          </Carousel>
-         <UploadTest />
+         <Typography variant="h3">
+            Most Liked 
+         </Typography>
+         { 
+            loaded ? 
+            createImagePreview(props.publicImages) :
+            null
+         }
       </div>
    )
 }
 
-function UploadTest(props){
-   const [images, setImages] = useState([]);
 
-   return(<input
-      type="file"
-      onChange={ (e) => {
-         const files = e.currentTarget.files
-         const fileReader = new FormData()
-         fileReader.append("albums[name]", "TestAlbum")
-         for( let i = 0; i < files.length; i++ ){
-            fileReader.append("albums[photos][]", files[0])
-         }
-         axios.post("/api/images", fileReader)
-      }}
-      multiple
-      />)
-}
 
 export default LandingPage

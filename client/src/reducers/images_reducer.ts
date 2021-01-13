@@ -1,6 +1,6 @@
 import {RECEIVE_IMAGES, images, action} from "../actions/image_actions";
 
-export default function (
+export default function reducer(
    state: {} | images = {}, 
    action: action
    ){

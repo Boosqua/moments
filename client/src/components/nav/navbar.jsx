@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import navStyle from "./nav.css"
+import navStyle from "./nav.css";
 import {  
    Grid, 
    ButtonGroup, 
@@ -9,14 +9,15 @@ import {
    makeStyles, 
    Drawer
 } from '@material-ui/core';
-import LoginForm from '../session/login_form_container'
-import SignUpForm from '../session/signup_form_container'
-import Profile from '../profile/profile_container'
+import LoginForm from '../session/login_form_container';
+import SignUpForm from '../session/signup_form_container';
+import Profile from '../profile/profile_container';
 import {
   Link,
   useRouteMatch,
   useHistory,
 } from "react-router-dom";
+
 const theme = createMuiTheme({
    typography: {
       fontFamily: "'Playfair Display', serif",
@@ -44,14 +45,21 @@ const useStyles = makeStyles((theme)=>({
 
    }
 }))
+
+//this is a monster that needs to be reworked
+//I used this component to learn material ui and some hooks
 function NavBar(props){
    let style = useStyles()
-   let { path, url }  = useRouteMatch()
+   let { path }  = useRouteMatch()
    const history = useHistory();
    const handleOnClick = useCallback(() => history.push('/'))
-   let sessionModal = (path === '/login' || path === "/signup")
-   let profileModale = (path === '/@me')
-   console.log(path)
+   useEffect( () => {
+      // need to rework waaaay to many db queries
+      let userId = props.user ? props.user.id : 0
+      props.fetchAllAlbums({userId: userId})
+   })
+   let sessionModal = (path === '/login' || path === "/signup") 
+   let profileModal = (path === '/@me') //huge issue if someone hits profile they get redirected
    let form
    function options () {
       return !props.loggedIn ? 
@@ -88,7 +96,7 @@ function NavBar(props){
                   </Link>
                   <Link to={`/signup`} style={{textDecoration: "none"}}>
                      <Button type="button" className={style.button}>
-                        Saved
+                        Home
                      </Button>
                   </Link>
                   <Link to={`/@me`} style={{textDecoration: "none"}}>
@@ -115,7 +123,7 @@ function NavBar(props){
    form = <SignUpForm />
    }
    const [openModal,setModal] = useState(sessionModal)
-   const [openProfile, setProfile] = useState(profileModale)
+   const [openProfile, setProfile] = useState(profileModal)
    useEffect(() => {
       setModal(path === '/login' || path === "/signup")
       setProfile(path === '/@me')

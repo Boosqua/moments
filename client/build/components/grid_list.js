@@ -24,12 +24,12 @@ var useStyles = makeStyles(function (theme) { return ({
     gridList: {
         width: 1500,
         height: "auto",
-        backgroundSize: "contain"
     },
 }); });
+// tile obj example --> I should practice typescript here
 /**
  *   {
- *     img: image,
+ *     img: new Image(),
  *     title: 'Image',
  *     author: 'author',
  *     cols: 2,
@@ -39,6 +39,8 @@ export default function ImageGridList(_a) {
     var tileData = _a.tileData;
     var classes = useStyles();
     function setTiles(tile) {
+        // sets column size according to width 
+        //would like to improve formula and add sorting method to allow for full rows
         var widthAdj = tile.img.height / tile.img.width;
         if (widthAdj < .75) {
             return 6;

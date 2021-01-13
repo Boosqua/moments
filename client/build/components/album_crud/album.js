@@ -49,10 +49,14 @@ var useStyles = makeStyles(function (theme) { return ({
         backgroundSize: "contain"
     },
 }); });
+//value of state object crudAction navigates helper method
 function Album(props) {
     var style = useStyles();
     var creating;
+    //props.creating( terrible name ) access newly created album in state.utils
+    //if creating exists and has a cover photo, app renders component for uploading images
     creating = !!props.creating.cover_path ? "images" : null;
+    //if no cover photo but creating exists we skip to uploading cover
     if (!props.creating.cover_path && !!props.creating.id) {
         creating = "uploadCover";
     }
@@ -65,7 +69,7 @@ function Album(props) {
         switch (crudAction) {
             case "uploadCover":
                 return UploadCover(props, cover, setCover, setCrud, style);
-            case "newAlbum":
+            case "newAlbum": //only set when creating
                 return CreateAlbum(props, album, setAlbum, setCrud);
             case "images":
                 return UploadImages(props, images, setImages, setCrud, files, setFiles);
@@ -76,6 +80,7 @@ function Album(props) {
     return (_jsxs("div", { children: [_jsx(NavBar, {}, void 0),
             _jsx("div", __assign({ style: { textAlign: "center", marginTop: "20px" } }, { children: crud() }), void 0)] }, void 0));
 }
+// render that informs user if they have no albums
 function Render(props, cb, style) {
     return (_jsxs(Typography, __assign({ variant: "h3" }, { children: [props.albums.length === 0 ?
                 ("You haven't created any albums yet!") :
@@ -90,6 +95,10 @@ function Render(props, cb, style) {
 function AlbumGrid(props, style) {
     return (_jsx("div", __assign({ className: style.root }, { children: _jsx(GridList, __assign({ cellHeight: "320", className: style.gridList, cols: 12 }, { children: props.albums.map(function (album, index) { return (_jsx(GridListTile, __assign({ cols: 3 }, { children: AlbumDisplay({ title: album.title, imagePath: album.cover_path }) }), index)); }) }), void 0) }), void 0));
 }
+// split album creation into three action
+//Create album --> set title and privacy option
+//Upload album cover --> preview and send to aws for storage
+//upload as many images as desired( limit 200)
 function CreateAlbum(props, album, cb, crudCb) {
     return (_jsxs("div", __assign({ style: { margin: '20px' } }, { children: [_jsxs(Typography, __assign({ style: { margin: '20px' } }, { children: ["Album Title", _jsx("br", {}, void 0),
                     _jsx(TextField, { value: album.title, onInput: function (e) {
@@ -113,7 +122,9 @@ function CreateAlbum(props, album, cb, crudCb) {
 function UploadCover(props, cover, cb, crudCb, style) {
     return (_jsxs("div", __assign({ style: { margin: '20px' } }, { children: [_jsxs(Typography, __assign({ style: { margin: '20px' } }, { children: ["Upload cover for " + props.creating.title,
                     _jsx("br", {}, void 0)] }), void 0),
-            _jsx("input", { type: "file", value: "", multiple: true, onChange: function (e) {
+            _jsx("input", { type: "file", value: "", multiple: true, 
+                //save file upload and create url path to inject album cover preview
+                onChange: function (e) {
                     var reader = new FileReader();
                     var file = e.currentTarget.files[0];
                     reader.onloadend = function () { return (cb({ image: { imageUrl: reader.result, imageFile: file }, file: file })); };
@@ -124,7 +135,11 @@ function UploadCover(props, cover, cb, crudCb, style) {
             _jsx("br", {}, void 0),
             cover ?
                 (_jsxs("div", { children: [_jsx("br", {}, void 0), AlbumDisplay({ imagePath: cover.image.imageUrl, title: props.creating.title }), _jsx("br", {}, void 0),
-                        _jsx(Button, __assign({ className: style.button, size: "large", onClick: function (e) {
+                        _jsx(Button
+                        //user can commit cover or create new one
+                        , __assign({ 
+                            //user can commit cover or create new one
+                            className: style.button, size: "large", onClick: function (e) {
                                 e.preventDefault();
                                 var fileReader = new FormData();
                                 fileReader.append("albumId", props.creating.id);
@@ -140,6 +155,7 @@ function UploadImages(props, images, cb, crudCb, files, setFiles) {
     function grabImages(file) {
         var newFiles = files;
         newFiles.push(file);
+        //send back info in new array or React won't realize we had a state change
         setFiles(__spreadArrays(newFiles));
         var reader = new FileReader();
         reader.onloadend = function () {
@@ -150,6 +166,7 @@ function UploadImages(props, images, cb, crudCb, files, setFiles) {
         reader.readAsDataURL(file);
     }
     function createImagePreview() {
+        //parse information into suitable props for out GridList container
         var gridReady = images.map(function (imagePath, index) {
             var img = new Image();
             img.src = imagePath;
@@ -180,6 +197,8 @@ function UploadImages(props, images, cb, crudCb, files, setFiles) {
                         var file = files[i];
                         grabImages(file);
                     }
+                    //change id to create new input object, without this I kept receiving the old file uploads
+                    //now people can upload as many as they want at a time
                     e.currentTarget.id = e.currentTarget.id === "" ?
                         1 :
                         e.currentTarget.id++;
@@ -187,9 +206,10 @@ function UploadImages(props, images, cb, crudCb, files, setFiles) {
                 createImagePreview() :
                 null] }), void 0));
 }
+// reusable component that can display albums with or without titles and adjust block sizing via props
 export function AlbumDisplay(props, onClickCb) {
     if (onClickCb === void 0) { onClickCb = function (e) { e.preventDefault(); }; }
-    return (_jsxs("div", { children: [_jsx("img", { loading: "lazy", src: props.imagePath, onLoad: function (e) {
+    return (_jsxs("div", { children: [_jsx("img", { src: props.imagePath, onLoad: function (e) {
                     var width = e.currentTarget.width;
                     var height = e.currentTarget.height;
                     var heightAdjust = width < height ? 1 : height / width;

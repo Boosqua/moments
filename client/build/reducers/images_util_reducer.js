@@ -1,5 +1,5 @@
 import { RECEIVE_UTIL_IMAGES } from "../actions/image_actions";
-export default function (state, action) {
+export default function reducer(state, action) {
     if (state === void 0) { state = []; }
     switch (action.type) {
         case RECEIVE_UTIL_IMAGES:

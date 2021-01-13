@@ -10,8 +10,9 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { useStyles } from '../session/login_form';
+import { useStyles } from '../session/session_form';
 import { Container, Typography, Button } from '@material-ui/core';
+//this will house access to update methods for user profile, link to liked images, allow single image uploads to public library, etc
 export default function Profile(props) {
     var style = useStyles();
     return (_jsxs(Container, __assign({ className: style.container }, { children: [_jsx(Typography, __assign({ variant: "h6", className: style.header, style: { fontSize: "40px" } }, { children: "Welcome Back " + props.user.username + "!" }), void 0),

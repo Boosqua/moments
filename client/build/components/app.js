@@ -27,6 +27,7 @@ var theme = createMuiTheme({
         },
     },
 });
+// need to rework routes
 var App = function () { return (_jsx("div", { children: _jsx(CssBaseline, { children: _jsx(ThemeProvider, __assign({ theme: theme }, { children: _jsxs(Switch, { children: [_jsx(Route, { exact: true, path: "/", component: MainPage }, void 0),
                     _jsx(AuthRoute, { exact: true, path: "/login", component: MainPage }, void 0),
                     _jsx(AuthRoute, { exact: true, path: "/signup", component: MainPage }, void 0),

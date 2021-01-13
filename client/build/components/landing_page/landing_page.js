@@ -25,14 +25,14 @@ function LandingPage(props) {
     var _a = useState(false), loaded = _a[0], setLoaded = _a[1];
     useEffect(function () {
         if (!loaded) {
-            props.fetchUtilImages();
+            props.fetchUtilImages(); //grab last 50 uploaded images for image gallery 
             setLoaded(true);
         }
     });
-    if (items.length === 0 && props.albums.length > 0) {
+    if (items.length === 0 && props.albums.length > 0) { //onetime grab of newly created albums for "trending carousel"
         for (var i = props.albums.length - 1; i >= props.albums.length - 10; i--) {
-            if( i < 0){
-               break
+            if (i < 0) { //sad times
+                break;
             }
             var album = { title: props.albums[i].title, imagePath: props.albums[i].cover_path };
             items.push(album);
@@ -49,7 +49,8 @@ function LandingPage(props) {
     }
     return (_jsxs("div", __assign({ style: { textAlign: "center", marginTop: "10px" } }, { children: [_jsx(Typography, __assign({ variant: "h3" }, { children: "Trending Albums" }), void 0),
             _jsx("br", {}, void 0),
-            _jsx(Carousel, { children: items.map(function (item, i) { return (_jsx(Item, __assign({}, item, { size: "400" }), i)); }) }, void 0), loaded ?
+            _jsx(Carousel, { children: items.map(function (item, i) { return (_jsx(Item, __assign({}, item, { size: "400" }), i)); }) }, void 0),
+            _jsx(Typography, __assign({ variant: "h3" }, { children: "Most Liked" }), void 0), loaded ?
                 createImagePreview(props.publicImages) :
                 null] }), void 0));
 }

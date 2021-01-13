@@ -1,5 +1,5 @@
 import { RECEIVE_ALBUM, RECEIVE_ALL_ALBUMS } from "../actions/album_actions";
-export default function (state, action) {
+export default function reducer(state, action) {
     var _a;
     if (state === void 0) { state = {}; }
     switch (action.type) {

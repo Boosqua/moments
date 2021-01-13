@@ -10,7 +10,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import { RECEIVE_IMAGES } from "../actions/image_actions";
-export default function (state, action) {
+export default function reducer(state, action) {
     if (state === void 0) { state = {}; }
     switch (action.type) {
         case RECEIVE_IMAGES:

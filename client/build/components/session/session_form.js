@@ -40,7 +40,8 @@ function LoginForm(props) {
             cb(e.currentTarget.value);
         };
     };
-    // Render the session errors if there are any
+    //errors code will be usable one day :D
+    // Render the session errors if there are any 
     // const renderErrors = () => {
     //    return(
     //          <ul>

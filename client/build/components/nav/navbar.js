@@ -41,17 +41,20 @@ var useStyles = makeStyles(function (theme) { return ({
         flexDirection: "row-reverse",
     }
 }); });
+//this is a monster that needs to be reworked
+//I used this component to learn material ui and some hooks
 function NavBar(props) {
     var style = useStyles();
-    var _a = useRouteMatch(), path = _a.path, url = _a.url;
+    var path = useRouteMatch().path;
     var history = useHistory();
     var handleOnClick = useCallback(function () { return history.push('/'); });
     useEffect(function () {
+        // need to rework waaaay to many db queries
         var userId = props.user ? props.user.id : 0;
         props.fetchAllAlbums({ userId: userId });
     });
     var sessionModal = (path === '/login' || path === "/signup");
-    var profileModale = (path === '/@me');
+    var profileModal = (path === '/@me'); //huge issue if someone hits profile they get redirected
     var form;
     function options() {
         return !props.loggedIn ?
@@ -69,8 +72,8 @@ function NavBar(props) {
     else {
         form = _jsx(SignUpForm, {}, void 0);
     }
-    var _b = useState(sessionModal), openModal = _b[0], setModal = _b[1];
-    var _c = useState(profileModale), openProfile = _c[0], setProfile = _c[1];
+    var _a = useState(sessionModal), openModal = _a[0], setModal = _a[1];
+    var _b = useState(profileModal), openProfile = _b[0], setProfile = _b[1];
     useEffect(function () {
         setModal(path === '/login' || path === "/signup");
         setProfile(path === '/@me');

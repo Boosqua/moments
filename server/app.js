@@ -19,13 +19,13 @@ app.set('view engine', 'html');
 app.use(passport.initialize());
 require("./config/passport")(passport);
 app.listen(process.env.PORT || 8080);
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("/", (req, res) => {
-    res.sendFile("/app/client/build/index.html");
-  });
-}
-app.get('/api', (req, res) => {
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("client/build"));
+//   app.get("/", (req, res) => {
+//     res.sendFile("/app/client/build/index.html");
+//   });
+// }
+app.get('/', (req, res) => {
   res.send(`${new Date()}`);
 });
 app.get(

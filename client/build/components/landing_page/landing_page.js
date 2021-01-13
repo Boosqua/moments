@@ -31,6 +31,9 @@ function LandingPage(props) {
     });
     if (items.length === 0 && props.albums.length > 0) {
         for (var i = props.albums.length - 1; i >= props.albums.length - 10; i--) {
+            if( i < 0){
+               break
+            }
             var album = { title: props.albums[i].title, imagePath: props.albums[i].cover_path };
             items.push(album);
         }

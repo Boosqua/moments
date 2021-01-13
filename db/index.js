@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 const { pgPool } = require("../config/keys")
 
-const pool = new Pool({connectionString: pgPool});
+const pool = new Pool({connectionString: pgPool, SSL: true});
 pool.query( "INSERT INTO users (username, password) VALUES (WORKING, MAYBE)" )
 module.exports = {
   query: (text, params, callback) => {

@@ -7,6 +7,7 @@ const Session = require('./app/controllers/session')
 const Albums = require('./app/controllers/albums')
 const Images = require('./app/controllers/images')
 const upload = require("./app/controllers/image_upload_aws")
+const path = require("path");
 var app = express();
 const passport = require("passport");
 const port = 8080;

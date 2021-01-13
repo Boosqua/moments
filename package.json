@@ -1,25 +1,13 @@
 {
-  "name": "server",
-  "version": "0.0.0",
-  "private": true,
+  "name": "Photo Dojo",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.13.0"
+  },
   "scripts": {
-    "start": "nodemon ./app.js"
+    "start": "nodemon ./app.js --prefix server",
+   "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "dependencies": {
-    "aws": "0.0.3-2",
-    "aws-sdk": "^2.824.0",
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "~1.4.4",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jsonwebtoken": "^8.5.1",
-    "morgan": "~1.9.1",
-    "multer": "^1.4.2",
-    "multer-s3": "^2.9.0",
-    "nodemon": "^2.0.6",
-    "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
-    "pg": "^8.5.1",
-    "s3": "^4.4.0"
   }
 }

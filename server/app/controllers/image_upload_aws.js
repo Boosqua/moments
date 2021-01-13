@@ -16,7 +16,8 @@ const fileFilter = (req, file, cb) => {
       cb(new Error("Invalid file type, only JPEG and PNG is allowed!"), false);
    }
 };
-
+// this is black magic 
+//takes FormData and uploads to aws
 const upload = multer({
   fileFilter,
   storage: multerS3({
@@ -27,7 +28,7 @@ const upload = multer({
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },
-    key: function (req, file, cb) {
+    key: function (req, file, cb) { //unique titles 
       cb(null, `${Date.now().toString()}` + "-" + file.originalname);
     },
   }),

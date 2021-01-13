@@ -1,9 +1,8 @@
 const Album = require( "../models/Album")
 
 module.exports = {
-   createAlbum: (request, response) => {
+   createAlbum: (request, response) => { // creates album object sans cover_image
       const { title, ownerId, public } = request.body;
-      console.log(request.body)
       return Album.create( {title, public, ownerId }).then( album => {
          response.status(201).json(album)
       })
